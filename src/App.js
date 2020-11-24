@@ -1,9 +1,14 @@
-import {LandingPage} from './Pages/LandingPage.js'
+import { BrowserRouter } from "react-router-dom";
+import Routes from "./Routes";
+import NavBar from "./NavBar";
 
 function App() {
   return (
     <div className="App">
-      <LandingPage/>
+      <BrowserRouter>
+        <NavBar />
+        <Routes />
+      </BrowserRouter>
     </div>
   );
 }

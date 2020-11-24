@@ -1,0 +1,28 @@
+.NavBar{
+  padding: 25px;
+}
+
+.NavBar-links{
+  background-color: #1E2B32;
+  border-radius: 10px 10px;
+}
+
+.NavBar-links-general {
+    display: flex;
+    justify-content: center;
+}
+
+.nav-link {
+  transition: 1s all;
+  font-size: 18px;
+  padding: 1em 2em;
+  margin-top: 0px;
+  color: #fff;
+}
+
+.nav-link:hover{
+  transition: 0.5s all;
+  color: #2f89fc;
+  background-color: rgba(49, 85, 107, 0.5);
+  cursor: pointer;
+}
