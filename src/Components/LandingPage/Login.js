@@ -1,42 +1,67 @@
-import React from 'react';
+import React from "react";
+import { login } from "../../Utils/requests";
 
-export class Login extends React.Component{
-      
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: '',
-            password: ''
-        };
-        
-        this.handleUsernameEvents = this.handleUsernameEvents.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.handleSubmitevents= this.handleSubmitevents.bind(this);
-        }
+export class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
+      loggedInError: false,
+    };
 
-        handleUsernameEvents(event) {
-        this.setState({username: event.target.value});
-        }
-    
-        handleSubmitevents(event) {
-        // handle submit events
-        }
+    this.handleEmailEvents = this.handleEmailEvents.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleSubmitevents = this.handleSubmitevents.bind(this);
+  }
 
-        handlePasswordChange(event){
-        this.setState({password: event.target.value});
-        }
+  handleEmailEvents(event) {
+    this.setState({ email: event.target.value });
+  }
 
-        render() {
-            return (
-                <div className=" TestLoginForm ">
-                    <form onSubmit={this.handleSubmitevents}>
-                        <label>User Name</label>
-                        <input type="text" data-test="username" value={this.state.username} onChange={this.handleUsernameEvents} />
-                        <label>Password</label>
-                        <input type="password" data-test="password" value={this.state.password} onChange={this. handlePasswordChange } />
-                        <input type="submit" value="Log In" data-test="submit" />
-                    </form>   
-                </div>
-        );
-      };
+  handlePasswordChange(event) {
+    this.setState({ password: event.target.value });
+  }
+
+  async handleSubmitevents(event) {
+    // handle submit events
+    const status = await login(this.state.email, this.state.password);
+    if (status) {
+      // On success
+      this.setState({ loggedInError: false });
+    } else {
+      this.setState({ loggedInError: true });
     }
+    console.log(this.state.loggedIn);
+  }
+
+  render() {
+    return (
+      <div className=" TestLoginForm ">
+        {this.state.loggedInError && <p>Error logging in!</p>}
+        <form>
+          <label>Email</label>
+          <input
+            type="text"
+            data-test="email"
+            value={this.state.email}
+            onChange={this.handleEmailEvents}
+          />
+          <label>Password</label>
+          <input
+            type="password"
+            data-test="password"
+            value={this.state.password}
+            onChange={this.handlePasswordChange}
+          />
+          <input
+            type="button"
+            value="Log In"
+            data-test="submit"
+            onClick={this.handleSubmitevents}
+          />
+        </form>
+      </div>
+    );
+  }
+}
