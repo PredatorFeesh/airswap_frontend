@@ -86,7 +86,11 @@ export class Register extends React.Component {
                   value={this.state.password}
                   onChange={this.handlePasswordChange}/>
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" 
+                    type="button"
+                    value="Register"
+                    data-test="submit"
+                    onClick={this.handleSubmitevents}>
               Register
             </Button>
           </Form>
