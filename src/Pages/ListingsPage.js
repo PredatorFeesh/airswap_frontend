@@ -1,12 +1,12 @@
 import React from 'react';
 
-export class RegisterPage extends React.Component{
+export class ListingsPage extends React.Component{
       
     render(){
     
       return (
         <div>
-            <h1>Register Page</h1>
+            <h1>Listings Page</h1>
         </div>
         );
       };
