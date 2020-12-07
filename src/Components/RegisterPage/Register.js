@@ -50,6 +50,7 @@ export class Register extends React.Component {
   render() {
     return (
       <div>
+        {this.state.loggedInError && <p>Error logging in!</p>}
         <h1>Ready to AirSwAP?</h1>
         <div>
           <Form>
