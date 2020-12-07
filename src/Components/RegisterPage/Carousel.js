@@ -38,7 +38,7 @@ export class RegisterCarousel extends React.Component {
 
                 <Carousel.Caption>
                 <h3>Paris</h3>
-                <p>Go on a romantic walk and snack on croissants</p>
+                <p>Go on a romantic walk and enjoy snacking on croissants</p>
                 </Carousel.Caption>
             </Carousel.Item>
         </Carousel>
