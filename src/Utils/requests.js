@@ -1,5 +1,6 @@
 import axios from "axios";
 import ls from 'local-storage'
+import { useParams } from "react-router-dom";
 
 // TODO, check ENV for enviroment and switch appropriately
 const url = "http://localhost";
@@ -33,7 +34,7 @@ instance.interceptors.response.use(
 */
 export const setAuthToken = (token) => {
   if (token) {
-    instance.defaults.headers.common["Authorization"] = token;
+    instance.defaults.headers.common["Authorization"] = "Bearer "+token;
   } else {
     delete instance.defaults.headers.common["Authorization"];
   }
@@ -66,9 +67,13 @@ export const isLoggedIn = () => {
   // TODO: This can fail, if we try to use the access token that expired. Currently this only captures new sessions correctly.
   // Possible solution: Intercept. If we see a fail, loggedIn has to be false. Maybe heartbeat?
   const timeDeltaMinutes = 15;
+
+  const timeNow = new Date();
+  const timeThen = new Date(ls.get('lastUpdated')) || new Date(0);
+
+  const diffMS = timeNow - timeThen;
   
-  const diffInMilliSeconds = (new Date() - ls.get('lastUpdated') || new Date(0));
-  const minutes = Math.floor(diffInMilliSeconds / 60) % 60;
+  const minutes = Math.round(((diffMS % 86400000) % 3600000) / 60000);;
   console.log(minutes)
 
   return !!ls.get('accessToken') && minutes < timeDeltaMinutes;
@@ -83,6 +88,7 @@ export const isLoggedIn = () => {
 */
 // TODO: Do we want this to return a more detailed error?
 export const register = async (email, password, name) => {
+  console.log("Starting loggin in");
   if (
     !!email &&
     email.length != 0 &&
@@ -92,7 +98,8 @@ export const register = async (email, password, name) => {
     name.length != 0
   ) {
     // If these fields are passed in
-    if (name.split(" ").length != 2) {
+    if (name.split(" ").length == 2) {
+      console.log("Name is right format");
       // We need to ensure name is in the right format
       // Now we are ready to make a request
       const response = await instance.post("/register", {
@@ -106,13 +113,13 @@ export const register = async (email, password, name) => {
         return false; // fail
       } else {
         // Otherwise we succeeded
+        console.log("Got response");
         const accessToken = response.data["access_token"];
         const refreshToken = response.data["refresh_token"];
+        console.log(accessToken);
         ls.set('accessToken', accessToken);
         ls.set('lastUpdated', new Date());
         ls.set('refreshToken', refreshToken);  
-        console.log("Access token: ", accessToken);
-        console.log("Refresh token: ", refreshToken);
         setAuthToken(accessToken);
         return true;
       }
@@ -154,8 +161,6 @@ export const login = async (email, password) => {
       ls.set('lastUpdated', new Date());
       ls.set('refreshToken', refreshToken);
       setAuthToken(accessToken);
-      console.log("Access token: ", accessToken);
-      console.log("Refresh token: ", refreshToken);
       return true;
     }
   } else {
@@ -171,3 +176,33 @@ export const logout = () => {
   ls.set('refreshToken', '');
   setAuthToken("");
 }
+
+
+/********** END AUTH **********/
+
+/********** START ROUTES **********/
+
+
+/*
+  @param id - If undefined, get current user's profile. Else ID
+*/
+export const getProfile = async (id = undefined) => {
+  setAuthToken(ls.get('accessToken'));
+  
+  let response;
+  if (id == undefined) {
+    response = await instance.get("/get_profile");
+  } else {
+    response = await instance.get("/get_profile/"+id);
+  }
+
+  if (response && response.status != 200 || !!response.data["err_msg"]) {
+    return false;
+  } else {
+    // Successful
+    return response.data
+  }
+}
+
+
+/********** END ROUTES **********/

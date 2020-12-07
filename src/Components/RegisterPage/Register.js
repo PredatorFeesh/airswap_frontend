@@ -72,7 +72,7 @@ export class Register extends React.Component {
           />
           <input
             type="button"
-            value="Log In"
+            value="Register"
             data-test="submit"
             onClick={this.handleSubmitevents}
           />
