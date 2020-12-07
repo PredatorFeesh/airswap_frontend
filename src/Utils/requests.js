@@ -50,7 +50,7 @@ export const refreshLogin = async () => {
   setAuthToken(refreshToken);
   const response = await instance.post("/refresh");
 
-  if (response.status == 200) {
+  if (response.status === 200) {
     accessToken = response.data["access_token"];
     setAuthToken(accessToken);
   }
@@ -78,14 +78,14 @@ export const isLoggedIn = () => {
 export const register = async (email, password, name) => {
   if (
     !!email &&
-    email.length != 0 &&
+    email.length !== 0 &&
     !!password &&
-    password.length != 0 &&
+    password.length !== 0 &&
     !!name &&
-    name.length != 0
+    name.length !== 0
   ) {
     // If these fields are passed in
-    if (name.split(" ").length != 2) {
+    if (name.split(" ").length !== 2) {
       // We need to ensure name is in the right format
       // Now we are ready to make a request
       const response = await instance.post("/register", {
@@ -95,7 +95,7 @@ export const register = async (email, password, name) => {
       });
 
       // Now we want to process that we didn't get an err_msg or bad status code
-      if (response.status != 200 || !!response.data["err_msg"]) {
+      if (response.status !== 200 || !!response.data["err_msg"]) {
         return false; // fail
       } else {
         // Otherwise we succeeded
@@ -124,7 +124,7 @@ export const register = async (email, password, name) => {
 // TODO: Do we want this to return a more detailed error?
 export const login = async (email, password) => {
   console.log("starting login: ", email, "@", password);
-  if (!!email && email.length != 0 && !!password && password.length != 0) {
+  if (!!email && email.length !== 0 && !!password && password.length !== 0) {
     // Confirm fields exist and not empty
     const response = await instance.post("/login", {
       email,
@@ -134,7 +134,7 @@ export const login = async (email, password) => {
     console.log(response);
 
     // If unsuccessful code or err message defined or response bad
-    if (response.status != 200 || !!response.data["err_msg"]) {
+    if (response.status !== 200 || !!response.data["err_msg"]) {
       return false;
     } else {
       // Successful
