@@ -1,9 +1,11 @@
 import React from "react";
+import { Button, Form } from 'react-bootstrap';
 import { register } from "../../Utils/requests";
 
 
-export class Register extends React.Component {
 
+export class Register extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -44,39 +46,55 @@ export class Register extends React.Component {
     console.log(this.state.loggedIn);
   }
 
+
   render() {
     return (
       <div className="RegisterForm ">
         {this.state.loggedInError && <p>Error logging in!</p>}
-        <form>
-          <label>Email</label>
-          <input
-            type="text"
-            data-test="email"
-            value={this.state.email}
-            onChange={this.handleEmailEvents}
-          />
-          <label>Password</label>
-          <input
-            type="password"
-            data-test="password"
-            value={this.state.password}
-            onChange={this.handlePasswordChange}
-          />
-          <label>Name (In the format: First Last)</label>
-          <input
-            type="text"
-            data-test="name"
-            value={this.state.name}
-            onChange={this.handleNameChange}
-          />
-          <input
-            type="button"
-            value="Register"
-            data-test="submit"
-            onClick={this.handleSubmitevents}
-          />
-        </form>
+        <h1>Ready to AirSwAP?</h1>
+        <div>
+          <Form>
+            <Form.Group controlId="formBasicText">
+              <Form.Label >Name</Form.Label>
+              <Form.Control 
+                    type="text" 
+                    placeholder="First and Last Please" 
+                    value={this.state.name} 
+                    onChange={this.handleNameChange} />
+            </Form.Group>
+
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label >Email address</Form.Label>
+              <Form.Control 
+                  type="email"
+                  data-test="email" 
+                  placeholder="Enter email"  
+                  value={this.state.email}
+                  onChange={this.handleEmailEvents}
+                    />
+              <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
+              </Form.Text>
+            </Form.Group>
+
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control 
+                  type="password" 
+                  placeholder="Password" 
+                  data-test="password"
+                  value={this.state.password}
+                  onChange={this.handlePasswordChange}/>
+            </Form.Group>
+            <Button variant="primary" 
+                    type="button"
+                    value="Register"
+                    data-test="submit"
+                    onClick={this.handleSubmitevents}>
+              Register
+            </Button>
+          </Form>
+        </div>  
       </div>
     );
   }
