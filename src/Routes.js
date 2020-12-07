@@ -5,6 +5,7 @@ import {ProfilePage} from "./Pages/ProfilePage";
 import {ListingsPage} from "./Pages/ListingsPage";
 import {LoginPage} from "./Pages/LoginPage";
 import {RegisterPage} from "./Pages/RegisterPage";
+import {Logout} from "./Pages/Logout";
 
 function Routes() {
   return (
@@ -24,7 +25,9 @@ function Routes() {
       <Route exact path="/listings">
         <ListingsPage />
       </Route>
-
+      <Route exact path="/logout">
+        <Logout />
+      </Route>
       <Redirect to="/" />
     </Switch>
   );

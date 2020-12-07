@@ -29,6 +29,7 @@ export class Login extends React.Component {
     if (status) {
       // On success
       this.setState({ loggedInError: false });
+      window.location.href = "/profile";
     } else {
       this.setState({ loggedInError: true });
     }
@@ -37,7 +38,7 @@ export class Login extends React.Component {
 
   render() {
     return (
-      <div className=" TestLoginForm ">
+      <div className="LoginForm ">
         {this.state.loggedInError && <p>Error logging in!</p>}
         <form>
           <label>Email</label>
