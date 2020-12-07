@@ -1,4 +1,5 @@
 import React from 'react';
+import {Register} from '../Components/RegisterPage/Register';
 
 export class RegisterPage extends React.Component{
       
@@ -7,6 +8,7 @@ export class RegisterPage extends React.Component{
       return (
         <div>
             <h1>Register Page</h1>
+            <Register />
         </div>
         );
       };

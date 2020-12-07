@@ -1,13 +1,11 @@
 import axios from "axios";
+import ls from 'local-storage'
 
 // TODO, check ENV for enviroment and switch appropriately
 const url = "http://localhost";
 const port = "5001"; // This is the port of our backend
 
 const baseURL = url + ":" + port;
-
-let refreshToken = "";
-let accessToken = "";
 
 const instance = axios.create({
   baseURL,
@@ -47,11 +45,14 @@ export const setAuthToken = (token) => {
   @return boolean - success code
 */
 export const refreshLogin = async () => {
+  const refreshToken = ls.get('refreshToken');
   setAuthToken(refreshToken);
   const response = await instance.post("/refresh");
 
   if (response.status == 200) {
-    accessToken = response.data["access_token"];
+    const accessToken = response.data["access_token"];
+    ls.set('accessToken', accessToken);
+    ls.set('lastUpdated', new Date());
     setAuthToken(accessToken);
   }
 };
@@ -64,7 +65,13 @@ export const test = () => {};
 export const isLoggedIn = () => {
   // TODO: This can fail, if we try to use the access token that expired. Currently this only captures new sessions correctly.
   // Possible solution: Intercept. If we see a fail, loggedIn has to be false. Maybe heartbeat?
-  return !!accessToken;
+  const timeDeltaMinutes = 15;
+  
+  const diffInMilliSeconds = (new Date() - ls.get('lastUpdated') || new Date(0));
+  const minutes = Math.floor(diffInMilliSeconds / 60) % 60;
+  console.log(minutes)
+
+  return !!ls.get('accessToken') && minutes < timeDeltaMinutes;
 };
 
 /*
@@ -99,8 +106,11 @@ export const register = async (email, password, name) => {
         return false; // fail
       } else {
         // Otherwise we succeeded
-        accessToken = response.data["access_token"];
-        refreshToken = response.data["refresh_token"];
+        const accessToken = response.data["access_token"];
+        const refreshToken = response.data["refresh_token"];
+        ls.set('accessToken', accessToken);
+        ls.set('lastUpdated', new Date());
+        ls.set('refreshToken', refreshToken);  
         console.log("Access token: ", accessToken);
         console.log("Refresh token: ", refreshToken);
         setAuthToken(accessToken);
@@ -138,8 +148,11 @@ export const login = async (email, password) => {
       return false;
     } else {
       // Successful
-      accessToken = response.data["access_token"];
-      refreshToken = response.data["refresh_token"];
+      const accessToken = response.data["access_token"];
+      const refreshToken = response.data["refresh_token"];
+      ls.set('accessToken', accessToken);
+      ls.set('lastUpdated', new Date());
+      ls.set('refreshToken', refreshToken);
       setAuthToken(accessToken);
       console.log("Access token: ", accessToken);
       console.log("Refresh token: ", refreshToken);
@@ -149,3 +162,12 @@ export const login = async (email, password) => {
     return false;
   }
 };
+
+/*
+  In order to log out, just kill the token
+*/
+export const logout = () => {
+  ls.set('accessToken', '');
+  ls.set('refreshToken', '');
+  setAuthToken("");
+}
