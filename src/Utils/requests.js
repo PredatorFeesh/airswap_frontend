@@ -33,7 +33,7 @@ instance.interceptors.response.use(
 */
 export const setAuthToken = (token) => {
   if (token) {
-    instance.defaults.headers.common["Authorization"] = token;
+    instance.defaults.headers.common["Authorization"] = "Bearer "+token;
   } else {
     delete instance.defaults.headers.common["Authorization"];
   }
@@ -73,6 +73,22 @@ export const isLoggedIn = () => {
 
   return !!ls.get('accessToken') && minutes < timeDeltaMinutes;
 };
+
+/*
+  Wrap functions that need validation to be run. Otherwise, redirect user
+  to the login page.
+*/
+export const loginRequiredWrapper = (fn) => {
+  return (...args) => {
+    if (isLoggedIn()) {
+      return fn(...args);
+    } else {
+      // If not logged in, redirect user to login and return empty func
+      window.location.href = "/login";
+      return () => {};
+    }
+  }
+}
 
 /*
   Call this to attempt to register the user.
@@ -171,3 +187,55 @@ export const logout = () => {
   ls.set('refreshToken', '');
   setAuthToken("");
 }
+
+
+/********** END AUTH **********/
+
+/********** START ROUTES **********/
+
+
+/*
+  @param id - If undefined, get current user's profile. Else ID
+*/
+export const getProfile = loginRequiredWrapper(async (id = undefined) => {
+  setAuthToken(ls.get('accessToken'));
+  
+  let response;
+  if (id == undefined) {
+    response = await instance.get("/get_profile");
+  } else {
+    response = await instance.get("/get_profile/"+id);
+  }
+
+  if (response && response.status != 200 || !!response.data["err_msg"]) {
+    return false;
+  } else {
+    // Successful
+    return response.data
+  }
+})
+
+/*
+  @param password - the password
+  @param name - name in format "<First> <Last>"
+  @param image - link to image
+  @param phoneNumer - the given phoneNumber as string
+  @param description - the description
+*/
+export const updateProfile = loginRequiredWrapper(async (password, name, image, phoneNumber, description) => {
+  setAuthToken(ls.get('accessToken'));
+  
+  const response = await instance.put("/update_profile", {
+    password, name, image, phoneNumber, description
+  });
+
+  if (response && response.status != 200 || !!response.data["err_msg"]) {
+    return false;
+  } else {
+    // Successful
+    return response.data
+  }
+})
+
+
+/********** END ROUTES **********/
