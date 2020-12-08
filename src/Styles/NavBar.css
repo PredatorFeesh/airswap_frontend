@@ -1,10 +1,10 @@
 .NavBar{
-  padding: 25px;
+  
 }
 
 .NavBar-links{
-  background-color: #1E2B32;
-  border-radius: 10px 10px;
+  background-color: lightcoral;
+  
 }
 
 .NavBar-links-general {

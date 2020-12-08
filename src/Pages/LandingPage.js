@@ -1,17 +1,21 @@
 import React from 'react';
-import {LogoDescription} from '../Components/LandingPage/LogoDescription.js'
-
-
+import { LogoDescription } from '../Components/LandingPage/LogoDescription.js';
+import { LandingCarousel } from '../Components/LandingPage/LandingCarousel.js' ;
+import { LandingJumbo } from '../Components/LandingPage/LandingJumbo.js';
+import '../Styles/LandingPage/LandingBackround.css'
 
 export class LandingPage extends React.Component{
       
     render(){
     
       return (
-        <div>
-            <h1>Landing Page</h1>
+        <div className="background">
             <div>
-                <LogoDescription/>
+
+            </div>
+            <div>
+                <LandingJumbo/>
+                <LandingCarousel/>
             </div>
         </div>
         );
