@@ -11,7 +11,7 @@ export class LandingJumbo extends React.Component{
                     <div >
                         <h1>AirSwAP</h1>
                         <p>
-                        A modern way to experience culture.
+                        A modern way to experience culture
                         </p>
                     </div>
                 </Container>
