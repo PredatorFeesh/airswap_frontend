@@ -1,0 +1,13 @@
+.LandingJumbo{
+    background-image: url("../../img/LandingBackgorundJumbo.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+    
+   }
+   
+
+   .center{
+    
+    align-items: center;
+   }
