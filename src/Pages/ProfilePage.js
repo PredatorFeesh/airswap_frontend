@@ -1,10 +1,19 @@
 import React from 'react';
-import { getProfile } from '../Utils/requests';
+import { closeListing } from '../Utils/requests';
 
 export class ProfilePage extends React.Component{
 
+    // constructor() {
+    //   this.state = {
+        
+    //   };
+    // }
+
     async testButton() {
-      const ret = await getProfile();
+      // Test user id 11
+      // Test user Listing id 9
+      const ret = await closeListing(36);
+      console.log("Ret: ");
       console.log(ret);
     }
       
