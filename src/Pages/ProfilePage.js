@@ -1,5 +1,5 @@
 import React from 'react';
-import { closeListing } from '../Utils/requests';
+import { cities } from '../Utils/requests';
 
 export class ProfilePage extends React.Component{
 
@@ -12,7 +12,7 @@ export class ProfilePage extends React.Component{
     async testButton() {
       // Test user id 11
       // Test user Listing id 9
-      const ret = await closeListing(36);
+      const ret = await cities();
       console.log("Ret: ");
       console.log(ret);
     }

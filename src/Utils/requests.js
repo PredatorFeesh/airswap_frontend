@@ -97,6 +97,9 @@ export const loginRequiredWrapper = (fn) => {
         const refreshStatus = await refreshLogin();
         if (refreshStatus) {
           return fn(...args);
+        } else {
+          ls.set('accessToken', '');
+          ls.set('refreshToken', '');
         }
       }
       window.location.href = "/login";
@@ -123,7 +126,7 @@ export const register = async (email, password, name) => {
     name.length != 0
   ) {
     // If these fields are passed in
-    if (name.split(" ").length != 2) {
+    if (name.split(" ").length == 2) {
       // We need to ensure name is in the right format
       // Now we are ready to make a request
       const response = await instance.post("/register", {
