@@ -1,5 +1,6 @@
 import axios from "axios";
 import ls from 'local-storage'
+import { useParams } from "react-router-dom";
 
 // TODO, check ENV for enviroment and switch appropriately
 const url = "http://localhost";
@@ -68,13 +69,13 @@ export const isLoggedIn = () => {
   // TODO: This can fail, if we try to use the access token that expired. Currently this only captures new sessions correctly.
   // Possible solution: Intercept. If we see a fail, loggedIn has to be false. Maybe heartbeat?
   const timeDeltaMinutes = 15;
+  const timeNow = new Date();
+  const timeThen = new Date(ls.get('lastUpdated')) || new Date(0);
 
-  const now = new Date();
-  const recieved = new Date(ls.get('lastUpdated')) || new Date(0);
-
-  var minutes = Math.round((((now - recieved) % 86400000) % 3600000) / 60000); // minutes
-
-  console.log(minutes);
+  const diffMS = timeNow - timeThen;
+  
+  const minutes = Math.round(((diffMS % 86400000) % 3600000) / 60000);;
+  console.log(minutes)
 
   return !!ls.get('accessToken') && minutes < timeDeltaMinutes;
 };
@@ -117,6 +118,7 @@ export const loginRequiredWrapper = (fn) => {
 */
 // TODO: Do we want this to return a more detailed error?
 export const register = async (email, password, name) => {
+  console.log("Starting loggin in");
   if (
     !!email &&
     email.length != 0 &&
@@ -140,13 +142,13 @@ export const register = async (email, password, name) => {
         return false; // fail
       } else {
         // Otherwise we succeeded
+        console.log("Got response");
         const accessToken = response.data["access_token"];
         const refreshToken = response.data["refresh_token"];
+        console.log(accessToken);
         ls.set('accessToken', accessToken);
         ls.set('lastUpdated', new Date());
         ls.set('refreshToken', refreshToken);  
-        console.log("Access token: ", accessToken);
-        console.log("Refresh token: ", refreshToken);
         setAuthToken(accessToken);
         return true;
       }
@@ -188,8 +190,6 @@ export const login = async (email, password) => {
       ls.set('lastUpdated', new Date());
       ls.set('refreshToken', refreshToken);
       setAuthToken(accessToken);
-      console.log("Access token: ", accessToken);
-      console.log("Refresh token: ", refreshToken);
       return true;
     }
   } else {

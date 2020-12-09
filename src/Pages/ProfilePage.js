@@ -1,19 +1,10 @@
 import React from 'react';
-import { cities } from '../Utils/requests';
+import { getProfile, isLoggedIn } from '../Utils/requests'
 
 export class ProfilePage extends React.Component{
 
-    // constructor() {
-    //   this.state = {
-        
-    //   };
-    // }
-
     async testButton() {
-      // Test user id 11
-      // Test user Listing id 9
-      const ret = await cities();
-      console.log("Ret: ");
+      const ret = await getProfile(2);
       console.log(ret);
     }
       
@@ -22,7 +13,7 @@ export class ProfilePage extends React.Component{
       return (
         <div>
             <h1>Profile Page</h1>
-            <button onClick={this.testButton}>Test me</button>
+            <button onClick={async () => {await this.testButton();}}> Click Test </button>
         </div>
         );
       };
