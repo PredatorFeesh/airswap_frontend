@@ -64,7 +64,7 @@ export class UserListingsDetails extends React.Component{
 
       return (
         <div  style={{border: "5px solid black", width: "40%",marginLeft: "auto", marginRight: "auto", marginBottom:"5px"}}>
-            <h2>User Details Form</h2>
+            <h2>User Listing Details Form</h2>
       <p>Selected city is: {this.state.citySelection}</p>
             <Form>
                 <Form.Group controlId="exampleForm.ControlSelect1" placeholder="Large text">
