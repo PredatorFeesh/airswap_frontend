@@ -30,8 +30,9 @@ export class Searchbar extends React.Component{
             
             <Form>
                 <Form.Group controlId="exampleForm.ControlSelect1" placeholder="Large text">
+      
+                <h3>Search for your next destination!</h3>
                     <Form.Control as="select" value={this.state.citySelected}  >
-                        <option  disabled selected>Select City: </option>
                         {optionsArr}
                     </Form.Control>
                 </Form.Group>
