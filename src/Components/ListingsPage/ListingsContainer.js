@@ -23,8 +23,7 @@ export class ListingsContainer extends React.Component{
         ] 
         };
     /*
-        this.handleEmailEvents = this.handleEmailEvents.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        
         this.handleSubmitevents = this.handleSubmitevents.bind(this);
     */  
     }  
