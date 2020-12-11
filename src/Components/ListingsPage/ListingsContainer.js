@@ -28,9 +28,7 @@ export class ListingsContainer extends React.Component{
     */  
     }  
 
-    componentWillMount(){
-        //to query the DB and fetch the cities. Should check the searchbar query props. Should set the listings state [{}] 
-      }
+    
 
     render(){
         
