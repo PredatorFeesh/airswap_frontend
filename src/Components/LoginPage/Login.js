@@ -76,7 +76,7 @@ export class Login extends React.Component {
                         value="Register"
                         data-test="submit"
                         onClick={this.handleSubmitevents}>
-                  Register
+                  Login
                 </Button>
               </Form>
           </Card.Body>

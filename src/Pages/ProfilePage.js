@@ -1,13 +1,9 @@
 import React from 'react';
-import { getProfile, isLoggedIn } from '../Utils/requests'
+
 import { UserDetails } from '../Components/ProfilePage/UserDetails.js';
 import { UserListingsDetails } from '../Components/ProfilePage/UserListingsDetails.js';
-export class ProfilePage extends React.Component{
 
-    async testButton() {
-      const ret = await getProfile(2);
-      console.log(ret);
-    }
+export class ProfilePage extends React.Component{
       
     render(){
     
