@@ -1,6 +1,8 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 
+import { updateProfile } from "../../Utils/requests";
+
 export class UserDetails extends React.Component{
     constructor(props) {
         super(props);
@@ -9,14 +11,15 @@ export class UserDetails extends React.Component{
             picture:"", 
             description:"", 
             email:"",
+            phone_number: "",
         };
 
         this.handleDescriptionChange=this.handleDescriptionChange.bind(this);
         this.handleEmailEvents=this.handleEmailEvents.bind(this);
         this.handleNameChange=this.handleNameChange.bind(this);
-        this.handlePictureChange=this.handlePictureChange.bind(this);
         this.handleSubmitevents=this.handleSubmitevents.bind(this);
         this.handleImageChange=this.handleImageChange.bind(this);
+        this.handlePhoneChange=this.handlePhoneChange.bind(this);
     }
    
     componentDidMount () {
@@ -26,6 +29,7 @@ export class UserDetails extends React.Component{
             picture: this.props.profile.Image || "",
             description: this.props.profile.UserDescription || "",
             email: this.props.profile.Email || "",
+            phone_number: this.props.profile["Phone Number"] || "",
         })
     }
 
@@ -41,29 +45,18 @@ export class UserDetails extends React.Component{
         this.setState({ name: event.target.value });
       }
 
-      handlePictureChange(event) { //should this even be 
-        this.setState({ picture: event.target.value }); //need to pass this function as a prop below
-      }
-
       handleImageChange(event) {
         this.setState({image: event.target.value});
+      }
+
+      handlePhoneChange(event) {
+        this.setState({phone_number: event.target.value});
       }
 
 
 
     async handleSubmitevents(event) {
-        /*
-        // handle submit events
-        const status = await register(this.state.email, this.state.password, this.state.name);
-        if (status) {
-        // On success
-        this.setState({ loggedInError: false });
-        window.location.href = "/profile";
-        } else {
-        this.setState({ loggedInError: true });
-        }
-        console.log(this.state.loggedIn);
-        */
+        updateProfile(this.state.name, this.state.picture, this.state.phone_number, this.state.description);
     }
     
 
@@ -97,6 +90,17 @@ export class UserDetails extends React.Component{
                         We'll never share your email with anyone else.
                     </Form.Text>
                 </Form.Group>
+                
+                <Form.Group controlId="formBasicText">
+                <Form.Label >Phone Number</Form.Label>
+                <Form.Control 
+                        readOnly={!this.props.isSelf}
+                        type="text" 
+                        placeholder="Your phone number." 
+                        value={this.state.phone_number} 
+                        onChange={this.handlePhoneChange} />
+                </Form.Group>
+
 
                 <Form.Group controlId="formBasicText">
                 <Form.Label >Picture</Form.Label>

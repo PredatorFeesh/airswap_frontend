@@ -255,9 +255,9 @@ export const getProfile = loginRequiredWrapper(async (id = undefined) => {
       }
     }
 */
-export const updateProfile = loginRequiredWrapper(async (password, name, image, phone_number, description) => {  
+export const updateProfile = loginRequiredWrapper(async (name, image, phone_number, description) => {  
   const response = await instance.put("/update_profile", {
-    password, name, image, phone_number, description
+    name, image, phone_number, description
   });
 
   if (response && response.status != 200 || !!response.data["err_msg"] && name.split(" ").length != 2) {

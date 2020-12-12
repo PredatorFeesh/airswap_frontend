@@ -1,6 +1,8 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 
+import { updateListing } from "../../Utils/requests";
+
 export class UserListingsDetails extends React.Component{
     constructor(props) {
         super(props);
@@ -54,18 +56,7 @@ export class UserListingsDetails extends React.Component{
       }
 
     async handleSubmitevents(event) {
-        /*
-        // handle submit events
-        const status = await register(this.state.email, this.state.password, this.state.name);
-        if (status) {
-        // On success
-        this.setState({ loggedInError: false });
-        window.location.href = "/profile";
-        } else {
-        this.setState({ loggedInError: true });
-        }
-        console.log(this.state.loggedIn);
-        */
+      updateListing(this.state.location, this.state.citySelection, this.state.picture, this.state.description).then(data => {});
     }
     
 
