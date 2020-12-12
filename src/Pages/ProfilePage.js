@@ -1,10 +1,10 @@
 import React from 'react';
-import { getProfile, isLoggedIn } from '../Utils/requests'
+import { requests } from '../Utils/requests'
 
 export class ProfilePage extends React.Component{
 
     async testButton() {
-      const ret = await getProfile(2);
+      const ret = await requests();
       console.log(ret);
     }
       

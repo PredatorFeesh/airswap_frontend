@@ -117,7 +117,7 @@ export const loginRequiredWrapper = (fn) => {
   @return boolean - WHETHER THE PROCESS SUCCEEDED.
 */
 // TODO: Do we want this to return a more detailed error?
-export const register = async (email, password, name) => {
+export const register = async (email, password, name, address, location, image, description) => {
   console.log("Starting loggin in");
   if (
     !!email &&
@@ -135,6 +135,7 @@ export const register = async (email, password, name) => {
         email,
         password,
         name,
+        address, location, image, description
       });
 
       // Now we want to process that we didn't get an err_msg or bad status code
@@ -260,31 +261,6 @@ export const updateProfile = loginRequiredWrapper(async (password, name, image, 
   });
 
   if (response && response.status != 200 || !!response.data["err_msg"] && name.split(" ").length != 2) {
-    return false;
-  } else {
-    // Successful
-    return response.data
-  }
-});
-
-/*
-  Login Required
-  @param address - of the house/apartment
-  @param location - of the house/apartment
-  @param image - of the house/apartment
-  @param description - of the house/apartment
-  @return {
-      Address, City, Date, Description, Image, ListingID, is_listed, Owner: {
-        Description, Email, First name, Image, Last name, Phone Number, UserID
-      }
-    }
-*/
-export const addListing = loginRequiredWrapper(async (address, location, image, description) => {
-  const response = await instance.post("/add_listing", {
-    address, location, image, description
-  });
-
-  if (response && response.status != 200 || !!response.data["err_msg"]) {
     return false;
   } else {
     // Successful

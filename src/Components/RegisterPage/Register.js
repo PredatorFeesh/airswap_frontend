@@ -18,6 +18,10 @@ export class Register extends React.Component {
     this.handleEmailEvents = this.handleEmailEvents.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleAddressChange = this.handleAddressChange.bind(this);
+    this.handleLocationChange = this.handleLocationChange.bind(this);
+    this.handleImageChange = this.handleImageChange.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleSubmitevents = this.handleSubmitevents.bind(this);
   }
 
@@ -33,9 +37,25 @@ export class Register extends React.Component {
     this.setState({ name: event.target.value });
   }
 
+  handleAddressChange(event) {
+    this.setState({ address: event.target.value });
+  }
+
+  handleLocationChange(event) {
+    this.setState({ location: event.target.value });
+  }
+
+  handleImageChange(event) {
+    this.setState({ image: event.target.value });
+  }
+
+  handleDescriptionChange(event) {
+    this.setState({ description: event.target.value });
+  }
+
   async handleSubmitevents(event) {
     // handle submit events
-    const status = await register(this.state.email, this.state.password, this.state.name);
+    const status = await register(this.state.email, this.state.password, this.state.name, this.state.address, this.state.location, this.state.image, this.state.description);
     if (status) {
       // On success
       this.setState({ loggedInError: false });
@@ -86,6 +106,43 @@ export class Register extends React.Component {
                   value={this.state.password}
                   onChange={this.handlePasswordChange}/>
             </Form.Group>
+            
+            <Form.Group controlId="formBasicText">
+              <Form.Label >Address</Form.Label>
+              <Form.Control 
+                    type="text" 
+                    placeholder="Address" 
+                    value={this.state.address} 
+                    onChange={this.handleAddressChange} />
+            </Form.Group>
+
+            <Form.Group controlId="formBasicText">
+              <Form.Label >Location</Form.Label>
+              <Form.Control 
+                    type="text" 
+                    placeholder="Location (City)" 
+                    value={this.state.location} 
+                    onChange={this.handleLocationChange} />
+            </Form.Group>
+
+            <Form.Group controlId="formBasicText">
+              <Form.Label >Image</Form.Label>
+              <Form.Control 
+                    type="text" 
+                    placeholder="Image Link" 
+                    value={this.state.image} 
+                    onChange={this.handleImageChange} />
+            </Form.Group>
+
+            <Form.Group controlId="formBasicText">
+              <Form.Label >Description</Form.Label>
+              <Form.Control 
+                    type="text" 
+                    placeholder="Please describe your home" 
+                    value={this.state.description} 
+                    onChange={this.handleDescriptionChange} />
+            </Form.Group>
+
             <Button variant="primary" 
                     type="button"
                     value="Register"
