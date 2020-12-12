@@ -20,6 +20,15 @@ export class UserListingsDetails extends React.Component{
         this.handleSubmitevents=this.handleSubmitevents.bind(this);
         this.handleImageChange=this.handleImageChange.bind(this);
     }
+
+    componentDidMount() {
+      this.setState({
+        location: this.props.listing.Address || "",
+        picture: this.props.listing.Image || "",
+        description: this.props.listing.Description || "",
+        citySelection: this.props.listing.City || "",
+      })
+    }
    
 
     
@@ -74,7 +83,7 @@ export class UserListingsDetails extends React.Component{
             <Form>
                 <Form.Group controlId="exampleForm.ControlSelect1" placeholder="Large text">
                     <Form.Label >Select Your City</Form.Label>
-                    <Form.Control as="select" onChange={this.handleCitySelectionChange} disabled={!this.props.isSelf} >
+                    <Form.Control as="select" value={this.state.citySelection} onChange={this.handleCitySelectionChange} disabled={!this.props.isSelf} >
                         {optionsArr}
                     </Form.Control>
                 </Form.Group>
@@ -95,7 +104,7 @@ export class UserListingsDetails extends React.Component{
                         readOnly={!this.props.isSelf}
                         type="text" 
                         placeholder="Location of image of your home." 
-                        value={this.state.location} 
+                        value={this.state.picture} 
                         onChange={this.handleImageChange} />
                 </Form.Group>
 

@@ -8,7 +8,7 @@ export class UserDetails extends React.Component{
             name:"", 
             picture:"", 
             description:"", 
-            email:""
+            email:"",
         };
 
         this.handleDescriptionChange=this.handleDescriptionChange.bind(this);
@@ -20,7 +20,13 @@ export class UserDetails extends React.Component{
     }
    
     componentDidMount () {
-
+        console.log("PROFILE: ", this.props.profile);
+        this.setState({
+            name: this.props.profile["First Name"]+" "+this.props.profile["Last Name"] || "",
+            picture: this.props.profile.Image || "",
+            description: this.props.profile.UserDescription || "",
+            email: this.props.profile.Email || "",
+        })
     }
 
     handleEmailEvents(event) {
@@ -98,7 +104,7 @@ export class UserDetails extends React.Component{
                         readOnly={!this.props.isSelf}
                         type="text" 
                         placeholder="Image location of you." 
-                        value={this.state.location} 
+                        value={this.state.picture} 
                         onChange={this.handleImageChange} />
                 </Form.Group>
 
