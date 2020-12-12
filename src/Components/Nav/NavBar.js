@@ -27,7 +27,7 @@ export class NavBar extends React.Component {
             </>
             :
             <>
-              <NavLink exact to="/profile" className="nav-link">
+              <NavLink exact to="/profile/-1" className="nav-link">
                 Profile
               </NavLink>
               <NavLink exact to="/listings" className="nav-link">

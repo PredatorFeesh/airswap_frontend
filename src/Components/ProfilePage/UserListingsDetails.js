@@ -18,6 +18,7 @@ export class UserListingsDetails extends React.Component{
         this.handleCitySelectionChange=this.handleCitySelectionChange.bind(this);
         this.handleLocationChange=this.handleLocationChange.bind(this);
         this.handleSubmitevents=this.handleSubmitevents.bind(this);
+        this.handleImageChange=this.handleImageChange.bind(this);
     }
    
 
@@ -37,6 +38,10 @@ export class UserListingsDetails extends React.Component{
 
       handleLocationChange(event) { 
         this.setState({location: event.target.value }); 
+      }
+
+      handleImageChange(event) {
+        this.setState({image: event.target.value});
       }
 
     async handleSubmitevents(event) {
@@ -69,7 +74,7 @@ export class UserListingsDetails extends React.Component{
             <Form>
                 <Form.Group controlId="exampleForm.ControlSelect1" placeholder="Large text">
                     <Form.Label >Select Your City</Form.Label>
-                    <Form.Control as="select" onChange={this.handleCitySelectionChange} >
+                    <Form.Control as="select" onChange={this.handleCitySelectionChange} disabled={!this.props.isSelf} >
                         {optionsArr}
                     </Form.Control>
                 </Form.Group>
@@ -77,27 +82,33 @@ export class UserListingsDetails extends React.Component{
                 <Form.Group controlId="formBasicText">
                 <Form.Label >Location Address</Form.Label>
                 <Form.Control 
+                        readOnly={!this.props.isSelf}
                         type="text" 
                         placeholder="What is the address?" 
                         value={this.state.location} 
                         onChange={this.handleLocationChange} />
                 </Form.Group>
 
-                <Form>
-                    <Form.Group>
-                        <Form.File id="exampleFormControlFile1" label="Upload your picture :)"  />
-                    </Form.Group>
-                </Form>
+                <Form.Group controlId="formBasicText">
+                <Form.Label >Picture</Form.Label>
+                <Form.Control 
+                        readOnly={!this.props.isSelf}
+                        type="text" 
+                        placeholder="Location of image of your home." 
+                        value={this.state.location} 
+                        onChange={this.handleImageChange} />
+                </Form.Group>
 
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>User Description</Form.Label>
-                    <Form.Control as="textarea" rows={3} value={this.state.description} onChange={this.handleDescriptionChange}/>
+                    <Form.Control readOnly={!this.props.isSelf} as="textarea" rows={3} value={this.state.description} onChange={this.handleDescriptionChange}/>
                 </Form.Group>
                 <Button variant="primary" 
+                    readOnly={!this.props.isSelf}
                     type="button"
                     value="Register"
                     data-test="submit"
-                    onClick={this.handleSubmitevents}>
+                    onClick={this.props.isSelf ? this.handleSubmitevents : () => {}}>
                     Update Listing
                 </Button>
             </Form>

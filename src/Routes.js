@@ -19,9 +19,7 @@ function Routes() {
       <Route exact path="/register">
         <RegisterPage />
       </Route>
-      <Route exact path="/profile">
-        <ProfilePage />
-      </Route>
+      <Route exact path="/profile/:id" component={ProfilePage} /> {/*Note -1 for self*/}
       <Route exact path="/listings">
         <ListingsPage />
       </Route>

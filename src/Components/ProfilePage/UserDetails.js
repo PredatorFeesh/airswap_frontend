@@ -16,8 +16,12 @@ export class UserDetails extends React.Component{
         this.handleNameChange=this.handleNameChange.bind(this);
         this.handlePictureChange=this.handlePictureChange.bind(this);
         this.handleSubmitevents=this.handleSubmitevents.bind(this);
+        this.handleImageChange=this.handleImageChange.bind(this);
     }
    
+    componentDidMount () {
+
+    }
 
     handleEmailEvents(event) {
         this.setState({ email: event.target.value });
@@ -33,6 +37,10 @@ export class UserDetails extends React.Component{
 
       handlePictureChange(event) { //should this even be 
         this.setState({ picture: event.target.value }); //need to pass this function as a prop below
+      }
+
+      handleImageChange(event) {
+        this.setState({image: event.target.value});
       }
 
 
@@ -62,6 +70,7 @@ export class UserDetails extends React.Component{
                 <Form.Group controlId="formBasicText">
                 <Form.Label >Name</Form.Label>
                 <Form.Control 
+                        readOnly={!this.props.isSelf}
                         type="text" 
                         placeholder="First and Last Please" 
                         value={this.state.name} 
@@ -70,33 +79,38 @@ export class UserDetails extends React.Component{
 
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label >Email address</Form.Label>
-                    <Form.Control 
+                    <Form.Control
+                        readOnly={!this.props.isSelf} 
                         type="email"
                         data-test="email" 
                         placeholder="Enter email"  
                         value={this.state.email}
                         onChange={this.handleEmailEvents}
                             />
-                    <Form.Text className="text-muted">
+                    <Form.Text className="text-muted" readOnly={!this.props.isSelf}>
                         We'll never share your email with anyone else.
                     </Form.Text>
                 </Form.Group>
 
-                <Form>
-                    <Form.Group>
-                        <Form.File id="exampleFormControlFile1" label="Upload your picture :)"  />
-                    </Form.Group>
-                </Form>
+                <Form.Group controlId="formBasicText">
+                <Form.Label >Picture</Form.Label>
+                <Form.Control 
+                        readOnly={!this.props.isSelf}
+                        type="text" 
+                        placeholder="Image location of you." 
+                        value={this.state.location} 
+                        onChange={this.handleImageChange} />
+                </Form.Group>
 
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>User Description</Form.Label>
-                    <Form.Control as="textarea" rows={3} value={this.state.description} onChange={this.handleDescriptionChange}/>
+                    <Form.Control as="textarea" rows={3} value={this.state.description} onChange={this.handleDescriptionChange} readOnly={!this.props.isSelf}/>
                 </Form.Group>
                 <Button variant="primary" 
                     type="button"
                     value="Register"
                     data-test="submit"
-                    onClick={this.handleSubmitevents}>
+                    onClick={this.props.isSelf ? this.handleSubmitevents : () => {}}>
                     Update Profile
                 </Button>
             </Form>
