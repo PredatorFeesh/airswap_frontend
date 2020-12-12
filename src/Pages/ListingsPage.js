@@ -19,12 +19,13 @@ export class ListingsPage extends React.Component{
 
     updateListings = () => {
         listings().then(data => {
+          console.log("Data: ", data);
             if (data == false) {
                 // If we failed the request
                 this.setState({listings: []});
                 return;
             }
-            this.setState({listings: data});
+            this.setState({listings: data.Listings});
         });
     }
 
