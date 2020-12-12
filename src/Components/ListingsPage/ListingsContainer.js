@@ -1,33 +1,33 @@
 import React from 'react';
 import { ListingsCard } from './ListingsCard.js'; 
 
+import { listings } from '../../Utils/requests';
+
 export class ListingsContainer extends React.Component{
+
     constructor(props) {
         super(props);
         this.state = {
           searchBarQuery: false, // false then show all subscribed to city listings, else show only what is wanted from the searchbar
-          listings: [
-                { 
-                    address:"17 waverly Pl apt9", city: "Madison", date:"12/12/20", description:"Beautiful town", image:"picture of my home", listingId:"1", isListed:"true", 
-                    owner: {
-                        ownerDescription:"Tall, blond, looks russian but is actually Ukrainian", email:"pablo.escobar@colombiaCocain.edu", firstName:"Pasha", image:"img", 
-                        lastName:"Aleks", phoneNumber:"3479242401", userId:"007"
-                    }
-                },
-                { 
-                    address:"London", city: "City of London ", date:"12/12/20", description:"Great old city", image:"big clock", listingId:"2", isListed:"true",
-                     owner: {
-                        ownerDescription:"cool, brunet ", email:"cool.brunet@xyz.com", firstName:"june", image:"img", lastName:"bug", phoneNumber:"no phone", userId:"008"
-                    }
-                }
-        ] 
+          listings: [] 
         };
-    /*
-        
-        this.handleSubmitevents = this.handleSubmitevents.bind(this);
-    */  
     }  
 
+    componentDidMount() {
+        this.updateListings();
+    }
+
+    updateListings() {
+        listings().then(data => {
+            if (data == false) {
+                // If we failed the request
+                this.setState({listings: []});
+                return;
+            }
+            this.setState({listings: data});
+            console.log(this.state.listings);
+        });
+    }
     
 
     render(){
@@ -47,7 +47,8 @@ export class ListingsContainer extends React.Component{
                                   lastName={this.state.listings[i].owner.firstName}
                                   ownerImg={this.state.listings[i].owner.img}      
                                   phoneNumber={this.state.listings[i].owner.phoneNumber}
-                                  ownerId={this.state.listings[i].owner.userId}                          
+                                  ownerId={this.state.listings[i].owner.userId}  
+                                  key={`list-${i}`}                        
                                   />
                 );
         }
