@@ -10,7 +10,6 @@ export class ProfilePage extends React.Component{
       return (
         <div>
             <h1>Profile Page</h1>
-            <button onClick={async () => {await this.testButton();}}> Click Test </button>
             <UserDetails/>
             <UserListingsDetails/>
         </div>
