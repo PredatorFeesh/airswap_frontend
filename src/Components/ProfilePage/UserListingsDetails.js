@@ -1,17 +1,19 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 
-import { updateListing } from "../../Utils/requests";
+import { updateListing, sentRequests, openListing, closeListing } from "../../Utils/requests";
 
 export class UserListingsDetails extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
+            id: '',
             cityOption:["London", "New York", "Kiev", "Moscow"], // <--------Needs to be fetched in and populated
             picture:"", 
             description:"", 
             location:"",
-            citySelection: ""
+            citySelection: "",
+            isListed: false,
         };
 
 
@@ -25,11 +27,14 @@ export class UserListingsDetails extends React.Component{
 
     componentDidMount() {
       this.setState({
+        id: this.props.listing.ListingID || "",
         location: this.props.listing.Address || "",
         picture: this.props.listing.Image || "",
         description: this.props.listing.Description || "",
         citySelection: this.props.listing.City || "",
-      })
+        isListed: this.props.listing.is_listed || "",
+      });
+      
     }
    
 
@@ -55,8 +60,58 @@ export class UserListingsDetails extends React.Component{
         this.setState({image: event.target.value});
       }
 
+    failedUpdate = () => {
+      // When we failed to update profile. @P
+    }
+
+    failChangeListingStatus = () => {
+      // When we fail to change listing status @P
+    }
+
+    failRequest = () => {
+      // When we fail to send a request to the user @P
+    }
+
+    successUpdate = () => {
+      // When we succesful update user info
+    }
+
+    successChangeListingStatus = () => {
+      // When we successfully change status of listing open or close
+    }
+
+    successRequest = () => {
+      // When a request was successfully made
+    }
+
+
     async handleSubmitevents(event) {
-      updateListing(this.state.location, this.state.citySelection, this.state.picture, this.state.description).then(data => {});
+      const response = updateListing(this.state.location, this.state.citySelection, this.state.picture, this.state.description).then(data => {});
+      if (response == false) {
+        this.failedUpdate();
+      } else {
+        this.successUpdate();
+      }
+    }
+
+    closeListing = () => {
+      const response = closeListing();
+      if (response != false) {
+        this.setState({isListed: false});
+        this.successChangeListingStatus();
+      } else {
+        this.failChangeListingStatus();
+      }
+    }
+
+    openListing = () => {
+      const response = openListing();
+      if (response != false) {
+        this.setState({isListed: true});
+        this.successChangeListingStatus();
+      } else {
+        this.failChangeListingStatus();
+      }
     }
     
 
@@ -111,6 +166,27 @@ export class UserListingsDetails extends React.Component{
                     onClick={this.props.isSelf ? this.handleSubmitevents : () => {}}>
                     Update Listing
                 </Button>
+                { this.props.isSelf &&
+                  <>
+                    { this.state.isListed ?
+                      <Button variant="primary" 
+                          type="button"
+                          value="CloseListing"
+                          data-test="submit"
+                          onClick={this.closeListing}>
+                          Close Listing
+                      </Button>
+                      :
+                        <Button variant="primary" 
+                            type="button"
+                            value="OpenListing"
+                            data-test="submit"
+                            onClick={this.openListing}>
+                            Open Listing
+                        </Button>
+                    }
+                  </>
+                }
             </Form>
         </div>
         );
