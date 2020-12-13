@@ -6,7 +6,7 @@ export class ListingsCard extends React.Component{
     
       return (
         <div style={{border: "2px solid black", margin: "10px"}}>
-            <h3>Listings Card</h3>
+            <a href={`/profile/${this.props.ownerId}`}><h3>Listings Card</h3></a>
             <p>address: {this.props.address}</p>
             <p>city: {this.props.city}</p>
             <p>date: {this.props.date}</p>
