@@ -249,7 +249,6 @@ export const sentRequests = loginRequiredWrapper(async () => {
   
   const response = await instance.get("/sent_requests");
 
-
   if (response && response.status != 200 || !!response.data["err_msg"]) {
     return false;
   } else {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 
-import { updateListing, sentRequests, openListing, closeListing } from "../../Utils/requests";
+import { updateListing, request, sentRequests, removeRequest, openListing, closeListing } from "../../Utils/requests";
 
 export class UserListingsDetails extends React.Component{
     constructor(props) {
@@ -14,6 +14,7 @@ export class UserListingsDetails extends React.Component{
             location:"",
             citySelection: "",
             isListed: false,
+            currentWasRequested : false,
         };
 
 
@@ -35,6 +36,20 @@ export class UserListingsDetails extends React.Component{
         isListed: this.props.listing.is_listed || "",
       });
       
+      sentRequests().then((list) => {
+        if (list != false) {
+          list = list.Requested;
+
+          const id = this.state.id;
+          const foundIndex = list.findIndex( (item) => { return item.Listing.ListingID == id } ) >= 0;
+          
+          console.log(id, foundIndex)
+
+          this.setState({currentWasRequested: foundIndex});
+
+        }
+      });
+
     }
    
 
@@ -69,19 +84,19 @@ export class UserListingsDetails extends React.Component{
     }
 
     failRequest = () => {
-      // When we fail to send a request to the user @P
+      // When we fail to send a request OR REMOVE a request to the profile we are viewing @P
     }
 
     successUpdate = () => {
-      // When we succesful update user info
+      // When we succesful update user info @P
     }
 
     successChangeListingStatus = () => {
-      // When we successfully change status of listing open or close
+      // When we successfully change status of listing open or close @P
     }
 
     successRequest = () => {
-      // When a request was successfully made
+      // When a request was successfully madeOR REMOVED a request to the profile we are viewing @P
     }
 
 
@@ -113,6 +128,26 @@ export class UserListingsDetails extends React.Component{
         this.failChangeListingStatus();
       }
     }
+
+    sendRequest = () => {
+      const response = request(this.state.id);
+      if (response != false) {
+        this.successRequest();
+        this.setState({currentWasRequested: true});
+      } else {
+        this.failRequest();
+      }
+    }
+
+    removeRequest = () => {
+      const response = removeRequest(this.state.id);
+      if (response != false) {
+        this.successRequest();
+        this.setState({currentWasRequested: false});
+      } else {
+        this.failRequest();
+      }
+    }
     
 
     render(){
@@ -127,6 +162,27 @@ export class UserListingsDetails extends React.Component{
             <h2>User Listing Details Form</h2>
       <p>Selected city is: {this.state.citySelection}</p>
             <Form>
+                { !this.props.isSelf &&
+                  <>
+                    { this.state.currentWasRequested ?
+                      <Button variant="primary" 
+                          type="button"
+                          value="RemoveRequest"
+                          data-test="submit"
+                          onClick={this.removeRequest}>
+                          Remove Request
+                      </Button>
+                      :
+                      <Button variant="primary" 
+                          type="button"
+                          value="SendRequest"
+                          data-test="submit"
+                          onClick={this.sendRequest}>
+                          Send Request
+                      </Button>
+                    }
+                  </>
+                }
                 <Form.Group controlId="exampleForm.ControlSelect1" placeholder="Large text">
                     <Form.Label >Select Your City</Form.Label>
                     <Form.Control as="select" value={this.state.citySelection} onChange={this.handleCitySelectionChange} disabled={!this.props.isSelf} >
