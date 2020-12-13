@@ -242,6 +242,23 @@ export const getProfile = loginRequiredWrapper(async (id = undefined) => {
 
 /*
   Login required
+  Get all sent requests
+*/
+export const sentRequests = loginRequiredWrapper(async () => {
+  setAuthToken(ls.get('accessToken'));
+  
+  const response = await instance.get("/sent_requests");
+
+  if (response && response.status != 200 || !!response.data["err_msg"]) {
+    return false;
+  } else {
+    // Successful
+    return response.data
+  }
+});
+
+/*
+  Login required
   Updates the profile (Not the Listing) of the user.
   @TODO ITP: Remove Password dependency here, huge security risk.
   @param password - the password
@@ -255,9 +272,9 @@ export const getProfile = loginRequiredWrapper(async (id = undefined) => {
       }
     }
 */
-export const updateProfile = loginRequiredWrapper(async (password, name, image, phone_number, description) => {  
+export const updateProfile = loginRequiredWrapper(async (name, image, phone_number, description) => {  
   const response = await instance.put("/update_profile", {
-    password, name, image, phone_number, description
+    name, image, phone_number, description
   });
 
   if (response && response.status != 200 || !!response.data["err_msg"] && name.split(" ").length != 2) {
@@ -434,8 +451,9 @@ export const listings = loginRequiredWrapper(async (cityName=undefined) => {
   @param listingID - the ID of the listing to mark as open. PROVIDE THAT OF CURRENT USER'S LISTING.
   POTENTIAL @TODO: Remove ID field on backend and here. Potential security risk.
 */
-export const openListing = loginRequiredWrapper(async (listingID) => {
-  const response = await instance.put("/open_listing/"+listingID);
+export const openListing = loginRequiredWrapper(async () => {
+  console.log("Opening..")
+  const response = await instance.put("/open_listing");
 
   if (response && response.status != 200 || !!response.data["err_msg"]) {
     return false;
@@ -451,8 +469,9 @@ export const openListing = loginRequiredWrapper(async (listingID) => {
   @param listingID - the ID of the listing to close. PROVIDE THAT OF CURRENT USER'S LISTING.
   POTENTIAL @TODO: Remove ID field on backend and here. Potential security risk.
 */
-export const closeListing = loginRequiredWrapper(async (listingID) => {
-  const response = await instance.put("/close_listing/"+listingID);
+export const closeListing = loginRequiredWrapper(async () => {
+  console.log("Closing..")
+  const response = await instance.put("/close_listing");
 
   if (response && response.status != 200 || !!response.data["err_msg"]) {
     return false;

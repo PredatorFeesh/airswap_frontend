@@ -1,6 +1,8 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 
+import { updateProfile } from "../../Utils/requests";
+
 export class UserDetails extends React.Component{
     constructor(props) {
         super(props);
@@ -8,16 +10,28 @@ export class UserDetails extends React.Component{
             name:"", 
             picture:"", 
             description:"", 
-            email:""
+            email:"",
+            phone_number: "",
         };
 
         this.handleDescriptionChange=this.handleDescriptionChange.bind(this);
         this.handleEmailEvents=this.handleEmailEvents.bind(this);
         this.handleNameChange=this.handleNameChange.bind(this);
-        this.handlePictureChange=this.handlePictureChange.bind(this);
         this.handleSubmitevents=this.handleSubmitevents.bind(this);
+        this.handleImageChange=this.handleImageChange.bind(this);
+        this.handlePhoneChange=this.handlePhoneChange.bind(this);
     }
    
+    componentDidMount () {
+        console.log("PROFILE: ", this.props.profile);
+        this.setState({
+            name: this.props.profile["First Name"]+" "+this.props.profile["Last Name"] || "",
+            picture: this.props.profile.Image || "",
+            description: this.props.profile.UserDescription || "",
+            email: this.props.profile.Email || "",
+            phone_number: this.props.profile["Phone Number"] || "",
+        })
+    }
 
     handleEmailEvents(event) {
         this.setState({ email: event.target.value });
@@ -31,25 +45,18 @@ export class UserDetails extends React.Component{
         this.setState({ name: event.target.value });
       }
 
-      handlePictureChange(event) { //should this even be 
-        this.setState({ picture: event.target.value }); //need to pass this function as a prop below
+      handleImageChange(event) {
+        this.setState({image: event.target.value});
+      }
+
+      handlePhoneChange(event) {
+        this.setState({phone_number: event.target.value});
       }
 
 
 
     async handleSubmitevents(event) {
-        /*
-        // handle submit events
-        const status = await register(this.state.email, this.state.password, this.state.name);
-        if (status) {
-        // On success
-        this.setState({ loggedInError: false });
-        window.location.href = "/profile";
-        } else {
-        this.setState({ loggedInError: true });
-        }
-        console.log(this.state.loggedIn);
-        */
+        updateProfile(this.state.name, this.state.picture, this.state.phone_number, this.state.description);
     }
     
 
@@ -62,6 +69,7 @@ export class UserDetails extends React.Component{
                 <Form.Group controlId="formBasicText">
                 <Form.Label >Name</Form.Label>
                 <Form.Control 
+                        readOnly={!this.props.isSelf}
                         type="text" 
                         placeholder="First and Last Please" 
                         value={this.state.name} 
@@ -70,33 +78,49 @@ export class UserDetails extends React.Component{
 
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label >Email address</Form.Label>
-                    <Form.Control 
+                    <Form.Control
+                        readOnly={!this.props.isSelf} 
                         type="email"
                         data-test="email" 
                         placeholder="Enter email"  
                         value={this.state.email}
                         onChange={this.handleEmailEvents}
                             />
-                    <Form.Text className="text-muted">
+                    <Form.Text className="text-muted" readOnly={!this.props.isSelf}>
                         We'll never share your email with anyone else.
                     </Form.Text>
                 </Form.Group>
+                
+                <Form.Group controlId="formBasicText">
+                <Form.Label >Phone Number</Form.Label>
+                <Form.Control 
+                        readOnly={!this.props.isSelf}
+                        type="text" 
+                        placeholder="Your phone number." 
+                        value={this.state.phone_number} 
+                        onChange={this.handlePhoneChange} />
+                </Form.Group>
 
-                <Form>
-                    <Form.Group>
-                        <Form.File id="exampleFormControlFile1" label="Upload your picture :)"  />
-                    </Form.Group>
-                </Form>
+
+                <Form.Group controlId="formBasicText">
+                <Form.Label >Picture</Form.Label>
+                <Form.Control 
+                        readOnly={!this.props.isSelf}
+                        type="text" 
+                        placeholder="Image location of you." 
+                        value={this.state.picture} 
+                        onChange={this.handleImageChange} />
+                </Form.Group>
 
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>User Description</Form.Label>
-                    <Form.Control as="textarea" rows={3} value={this.state.description} onChange={this.handleDescriptionChange}/>
+                    <Form.Control as="textarea" rows={3} value={this.state.description} onChange={this.handleDescriptionChange} readOnly={!this.props.isSelf}/>
                 </Form.Group>
                 <Button variant="primary" 
                     type="button"
                     value="Register"
                     data-test="submit"
-                    onClick={this.handleSubmitevents}>
+                    onClick={this.props.isSelf ? this.handleSubmitevents : () => {}}>
                     Update Profile
                 </Button>
             </Form>
