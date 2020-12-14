@@ -1,0 +1,13 @@
+.outerMostContainer{
+  border-radius: 5px;
+  background-color: lightcoral;
+  width: 75%;
+
+}
+
+.topCard{
+    background-color: lightcoral;
+   
+    font-size: xx-large;
+    text-align: center;
+}

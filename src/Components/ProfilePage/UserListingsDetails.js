@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
-
+import '../../Styles/ProfileStyles/UserListingsDetails.css';
 import { updateListing, request, sentRequests, removeRequest, openListing, closeListing } from "../../Utils/requests";
 
 export class UserListingsDetails extends React.Component{

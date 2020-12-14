@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
-
+import '../../Styles/ProfileStyles/UserDetails.css';
 import { updateProfile } from "../../Utils/requests";
 
 export class UserDetails extends React.Component{

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import '../Styles/ProfileStyles/ProfileStyles.css';
 import { UserDetails } from '../Components/ProfilePage/UserDetails.js';
 import { UserListingsDetails } from '../Components/ProfilePage/UserListingsDetails.js';
 
@@ -40,8 +40,8 @@ export class ProfilePage extends React.Component{
     render(){
     
       return (
-        <div>
-            <h1>Profile Page</h1>
+        <div >
+            <h1 >Profile</h1>
             {this.state.isLoaded ?
               <> 
                 <UserDetails isSelf={this.state.isSelf} id={this.state.id} profile={this.state.profile} />
