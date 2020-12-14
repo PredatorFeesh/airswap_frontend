@@ -512,7 +512,7 @@ Return:
 
 ## SiteMap
 
-@TODO
+![SiteMap Image](https://github.com/PredatorFeesh/airswap_frontend/blob/master/readme_images/sitemap.png)
 
 ## User Stories
 
