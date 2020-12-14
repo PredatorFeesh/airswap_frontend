@@ -1,6 +1,8 @@
 # AirSWaP
 
-## Overview
+The frontend interacts with the backend. The purpose of this repository is to communicate with [the backend directory here](https://github.com/PredatorFeesh/airswap_backend) and to render/send requests to the backend.
+
+## Overview - What is AirSWaP
 
 AirSWaP allows people from different parts of the world to swap apartments/houses with each other for a certain amount of time. The motivation for the application comes from the fact that people want to travel to different parts of the world for various periods of time but don’t want to spend money on Airbnb or hotel costs. An ideal user of the app would be a person who wants a break in routine from their normal lives for a short while. This is mostly meant for people who are either able to work remotely, looking to take a vacation, or are not employed.
  
