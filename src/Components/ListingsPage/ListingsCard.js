@@ -1,27 +1,33 @@
 import React from 'react';
+import { Card, Button } from 'react-bootstrap';
+import '../../Styles/ListingsPage/ListingsCard.css';
 
 export class ListingsCard extends React.Component{
       
     render(){
     
       return (
-        <div style={{border: "2px solid black", margin: "10px"}}>
-            <a href={`/profile/${this.props.ownerId}`}><h3>Listings Card</h3></a>
-            <p>address: {this.props.address}</p>
-            <p>city: {this.props.city}</p>
-            <p>date: {this.props.date}</p>
-            <p>description: {this.props.description}</p>
-            <p>img: {this.props.img}</p>
-            <p>listingId: {this.props.listingId}</p>
-            <p>isListed: {this.props.isListed}</p>
-            <p>ownerDescription: {this.props.ownerDescription}</p>
-            <p>email: {this.props.email}</p>
-            <p>lastName: {this.props.lastName}</p>
-            <p>ownerImg: {this.props.ownerImg}</p>
-            <p>phoneNumber: {this.props.phoneNumber}</p>
-            <p>ownerId: {this.props.ownerId}</p>
-            
+        <div  >
+            <Card className="cardOuter">
+              <Card.Img variant="top" style={{height:"250px", width:"450px"}}src={this.props.img} />
+                <Card.Text className="underImgText">
+                  {this.props.city}, {this.props.address}
+                </Card.Text>
 
+              <Card.Body>
+                <h3>Take you next adventure to {this.props.city}?</h3>
+                <h6>Where you will be staying:</h6>
+                <Card.Text>
+                  {this.props.description}. {}
+                </Card.Text>
+                <h6>Who will stay at your place?</h6>
+                <Card.Text>
+                  {this.props.ownerDescription}. {}
+                </Card.Text>
+                
+                <Button variant="outline-success" href={`/profile/${this.props.ownerId}`}>Find Out More</Button>
+              </Card.Body>
+            </Card>
         </div>
         );
       };

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Form, Button } from 'react-bootstrap';
-
+import { Form, Button, Card } from 'react-bootstrap';
+import '../../Styles/ProfileStyles/UserDetails.css';
 import { updateProfile } from "../../Utils/requests";
 
 export class UserDetails extends React.Component{
@@ -46,7 +46,7 @@ export class UserDetails extends React.Component{
       }
 
       handleImageChange(event) {
-        this.setState({image: event.target.value});
+        this.setState({picture: event.target.value});
       }
 
       handlePhoneChange(event) {
@@ -63,9 +63,10 @@ export class UserDetails extends React.Component{
     render(){
     
       return (
-        <div  style={{border: "5px solid black", width: "40%",marginLeft: "auto", marginRight: "auto", marginBottom:"5px"}}>
-            <h2>User Details Form</h2>
-            <Form>
+        <div className="UserDetailsOuterDiv"  >
+          <Card className="formUserDetails">
+            <h2 style={{backgroundColor:"lightcoral", color:"white",textAlign:"center"}}>So Who Owns this Place?</h2>
+            <Form >
                 <Form.Group controlId="formBasicText">
                 <Form.Label >Name</Form.Label>
                 <Form.Control 
@@ -86,9 +87,7 @@ export class UserDetails extends React.Component{
                         value={this.state.email}
                         onChange={this.handleEmailEvents}
                             />
-                    <Form.Text className="text-muted" readOnly={!this.props.isSelf}>
-                        We'll never share your email with anyone else.
-                    </Form.Text>
+                    
                 </Form.Group>
                 
                 <Form.Group controlId="formBasicText">
@@ -116,7 +115,7 @@ export class UserDetails extends React.Component{
                     <Form.Label>User Description</Form.Label>
                     <Form.Control as="textarea" rows={3} value={this.state.description} onChange={this.handleDescriptionChange} readOnly={!this.props.isSelf}/>
                 </Form.Group>
-                <Button variant="primary" 
+                <Button variant="success" 
                     type="button"
                     value="Register"
                     data-test="submit"
@@ -124,6 +123,7 @@ export class UserDetails extends React.Component{
                     Update Profile
                 </Button>
             </Form>
+            </Card>
         </div>
         );
       };

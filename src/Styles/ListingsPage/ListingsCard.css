@@ -1,0 +1,14 @@
+.underImgText{
+    font-size: small;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.cardOuter{
+    margin: 0 auto; 
+    float: none; 
+    width: 90%;
+    margin-top: 10px;
+    background-color: #f0b880;
+}
+

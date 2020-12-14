@@ -46,7 +46,7 @@ export class ListingsPage extends React.Component{
     
       return (
         <div >
-            <h1 style={{textAlign: "center"}}>Listings Page</h1>
+            
             <Searchbar
               searchCity={this.searchCity}
             />

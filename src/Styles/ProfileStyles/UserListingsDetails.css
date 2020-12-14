@@ -1,0 +1,11 @@
+.formLisitingDetails{
+    width: auto;
+    
+    font-size: large;
+}
+.outerDiv{
+    margin-left:auto;
+    margin-right: auto;
+    min-width: 40%;
+    margin-top: 20px;
+}

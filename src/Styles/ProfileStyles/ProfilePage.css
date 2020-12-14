@@ -1,0 +1,14 @@
+.profileOuterMost{
+    background-color: #f0b880;
+    
+}
+
+.profileOuterMost h1 {
+    text-align: center;
+}
+
+.inlineComponents{
+    display:flex; 
+    
+    
+}

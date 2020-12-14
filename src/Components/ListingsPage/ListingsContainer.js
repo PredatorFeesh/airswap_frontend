@@ -1,6 +1,7 @@
 import React from 'react';
+import { Card } from 'react-bootstrap';
 import { ListingsCard } from './ListingsCard.js'; 
-
+import '../../Styles/ListingsPage/ListingsContainer.css';
 export class ListingsContainer extends React.Component{
 
     constructor(props) {
@@ -15,7 +16,9 @@ export class ListingsContainer extends React.Component{
         let listingsArr=[]
         for(let i=0; i<this.props.listings.length; i++){
             listingsArr.push(
-                    <ListingsCard address={this.props.listings[i].Address} 
+                    <ListingsCard 
+                                  className="listingCard"
+                                  address={this.props.listings[i].Address} 
                                   city={this.props.listings[i].City}
                                   date={this.props.listings[i].Date}
                                   description={this.props.listings[i].Description}
@@ -34,9 +37,11 @@ export class ListingsContainer extends React.Component{
         }
 
       return (
-        <div style={{border: "5px solid black", width: "40%",marginLeft: "auto", marginRight: "auto"}}>
+        <div className="outerMostContainer" style={{ marginLeft: "auto", marginRight: "auto"}}>
             
-            <h2>Listings Container</h2>
+            <Card className="topCard">
+                <Card.Body>Where will you go next?</Card.Body>
+            </Card>
             {listingsArr}
         </div>
         );

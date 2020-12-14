@@ -1,6 +1,6 @@
 import React from 'react';
-import { Form, Button } from 'react-bootstrap';
-
+import { Form, Button, Card } from 'react-bootstrap';
+import '../../Styles/ProfileStyles/UserListingsDetails.css';
 import { updateListing, request, sentRequests, removeRequest, openListing, closeListing } from "../../Utils/requests";
 
 export class UserListingsDetails extends React.Component{
@@ -23,7 +23,6 @@ export class UserListingsDetails extends React.Component{
         this.handleCitySelectionChange=this.handleCitySelectionChange.bind(this);
         this.handleLocationChange=this.handleLocationChange.bind(this);
         this.handleSubmitevents=this.handleSubmitevents.bind(this);
-        this.handleImageChange=this.handleImageChange.bind(this);
     }
 
     componentDidMount() {
@@ -69,10 +68,6 @@ export class UserListingsDetails extends React.Component{
 
       handleLocationChange(event) { 
         this.setState({location: event.target.value }); 
-      }
-
-      handleImageChange(event) {
-        this.setState({image: event.target.value});
       }
 
     failedUpdate = () => {
@@ -158,14 +153,14 @@ export class UserListingsDetails extends React.Component{
         }
 
       return (
-        <div  style={{border: "5px solid black", width: "40%",marginLeft: "auto", marginRight: "auto", marginBottom:"5px"}}>
-            <h2>User Listing Details Form</h2>
-      <p>Selected city is: {this.state.citySelection}</p>
+        <div className="outerDiv" >
+          <Card className="formLisitingDetails">
+            <h2  style={{backgroundColor:"lightcoral", color:"white", textAlign:"center"}}>About the Place</h2>
             <Form>
                 { !this.props.isSelf &&
                   <>
                     { this.state.currentWasRequested ?
-                      <Button variant="primary" 
+                      <Button variant="success" 
                           type="button"
                           value="RemoveRequest"
                           data-test="submit"
@@ -173,7 +168,7 @@ export class UserListingsDetails extends React.Component{
                           Remove Request
                       </Button>
                       :
-                      <Button variant="primary" 
+                      <Button variant="success" 
                           type="button"
                           value="SendRequest"
                           data-test="submit"
@@ -207,14 +202,14 @@ export class UserListingsDetails extends React.Component{
                         type="text" 
                         placeholder="Location of image of your home." 
                         value={this.state.picture} 
-                        onChange={this.handleImageChange} />
+                        onChange={this.handlePictureChange} />
                 </Form.Group>
 
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>User Description</Form.Label>
                     <Form.Control readOnly={!this.props.isSelf} as="textarea" rows={3} value={this.state.description} onChange={this.handleDescriptionChange}/>
                 </Form.Group>
-                <Button variant="primary" 
+                <Button variant="success" 
                     readOnly={!this.props.isSelf}
                     type="button"
                     value="Register"
@@ -225,7 +220,7 @@ export class UserListingsDetails extends React.Component{
                 { this.props.isSelf &&
                   <>
                     { this.state.isListed ?
-                      <Button variant="primary" 
+                      <Button variant="success" 
                           type="button"
                           value="CloseListing"
                           data-test="submit"
@@ -233,7 +228,7 @@ export class UserListingsDetails extends React.Component{
                           Close Listing
                       </Button>
                       :
-                        <Button variant="primary" 
+                        <Button variant="success" 
                             type="button"
                             value="OpenListing"
                             data-test="submit"
@@ -244,6 +239,7 @@ export class UserListingsDetails extends React.Component{
                   </>
                 }
             </Form>
+            </Card>
         </div>
         );
       };

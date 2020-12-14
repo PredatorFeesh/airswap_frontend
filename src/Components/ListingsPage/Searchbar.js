@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Jumbotron } from 'react-bootstrap';
 
 import { cities, followedCities, follow, unfollow } from '../../Utils/requests';
 
@@ -66,7 +66,9 @@ export class Searchbar extends React.Component{
         let followUnfollow = undefined;
         if (this.state.followedCities.findIndex(cityObj => cityObj.Name == this.state.currentCity) >= 0) {
             // If we are already following
-            followUnfollow = <Button variant="primary" 
+            followUnfollow = <Button 
+                size="sm"
+                variant="outline-danger" 
                 type="button"
                 value="Unfollow"
                 data-test="unfollow"
@@ -77,9 +79,11 @@ export class Searchbar extends React.Component{
             // If on followed cities screen
         } else {
             // If we aren't following
-            followUnfollow = <Button variant="primary" 
+            followUnfollow = <Button 
+                size=" lg"
+                variant="outline-success"  
                 type="button"
-                value="Follow"
+                value=" Follow  "
                 data-test="follow"
                 onClick={this.followSelectedCity}>
                 {`Follow`}
@@ -88,10 +92,10 @@ export class Searchbar extends React.Component{
 
       return (
 
-        <div style={{border: "5px solid black", width: "40%",marginLeft: "auto", marginRight: "auto", marginBottom:"5px"}}>
-            <h1 style={{textAlign: "center"}}>Search bar</h1>
+        <div >
             
             
+            <Jumbotron style={{marginBottom:"2px"}}>
             <Form>
                 <Form.Group controlId="exampleForm.ControlSelect1" placeholder="Large text">
       
@@ -102,7 +106,7 @@ export class Searchbar extends React.Component{
                 </Form.Group>
                 {followUnfollow}
             </Form>
-
+            </Jumbotron>
 
         </div>
         );
