@@ -46,7 +46,7 @@ export class UserDetails extends React.Component{
       }
 
       handleImageChange(event) {
-        this.setState({image: event.target.value});
+        this.setState({picture: event.target.value});
       }
 
       handlePhoneChange(event) {

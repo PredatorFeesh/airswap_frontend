@@ -23,7 +23,6 @@ export class UserListingsDetails extends React.Component{
         this.handleCitySelectionChange=this.handleCitySelectionChange.bind(this);
         this.handleLocationChange=this.handleLocationChange.bind(this);
         this.handleSubmitevents=this.handleSubmitevents.bind(this);
-        this.handleImageChange=this.handleImageChange.bind(this);
     }
 
     componentDidMount() {
@@ -69,10 +68,6 @@ export class UserListingsDetails extends React.Component{
 
       handleLocationChange(event) { 
         this.setState({location: event.target.value }); 
-      }
-
-      handleImageChange(event) {
-        this.setState({image: event.target.value});
       }
 
     failedUpdate = () => {
@@ -207,7 +202,7 @@ export class UserListingsDetails extends React.Component{
                         type="text" 
                         placeholder="Location of image of your home." 
                         value={this.state.picture} 
-                        onChange={this.handleImageChange} />
+                        onChange={this.handlePictureChange} />
                 </Form.Group>
 
                 <Form.Group controlId="exampleForm.ControlTextarea1">
