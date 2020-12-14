@@ -9,7 +9,7 @@ export class ListingsCard extends React.Component{
       return (
         <div  >
             <Card className="cardOuter">
-              <Card.Img variant="top" style={{maxHeight:"600px", maxWidth:"800px"}}src={this.props.img} />
+              <Card.Img variant="top" style={{height:"600px", width:"800px"}}src={this.props.img} />
                 <Card.Text className="underImgText">
                   {this.props.city}, {this.props.address}
                 </Card.Text>
