@@ -33,6 +33,12 @@ export class NavBar extends React.Component {
               <NavLink exact to="/listings" className="nav-link">
                 Listings
               </NavLink>
+              <NavLink exact to="/view_requests" className="nav-link">
+                Requests Sent
+              </NavLink>
+              <NavLink exact to="/view_requested" className="nav-link">
+                Requests Recieved
+              </NavLink>
               <NavLink exact to="/logout" className="nav-link">
                 Logout
               </NavLink>

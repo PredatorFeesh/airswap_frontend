@@ -75,7 +75,7 @@ export const isLoggedIn = () => {
   const diffMS = timeNow - timeThen;
   
   const minutes = Math.round(((diffMS % 86400000) % 3600000) / 60000);;
-  console.log(minutes)
+  console.log("minutes since active: ", minutes)
 
   return !!ls.get('accessToken') && minutes < timeDeltaMinutes;
 };
@@ -258,6 +258,22 @@ export const sentRequests = loginRequiredWrapper(async () => {
 });
 
 /*
+  Login Required
+  See requests to swap
+  @return - TODO 
+*/
+export const receivedRequests = loginRequiredWrapper(async () => {
+  const response = await instance.get("/received_requests");
+
+  if (response && response.status != 200 || !!response.data["err_msg"]) {
+    return false;
+  } else {
+    // Successful
+    return response.data
+  }
+});
+
+/*
   Login required
   Updates the profile (Not the Listing) of the user.
   @TODO ITP: Remove Password dependency here, huge security risk.
@@ -369,21 +385,6 @@ export const removeRequest = loginRequiredWrapper(async (id) => {
   }
 });
 
-/*
-  Login Required
-  See requests to swap
-  @return - TODO 
-*/
-export const requests = loginRequiredWrapper(async () => {
-  const response = await instance.get("/requests");
-
-  if (response && response.status != 200 || !!response.data["err_msg"]) {
-    return false;
-  } else {
-    // Successful
-    return response.data
-  }
-});
 
 /*
   Login Required
@@ -452,7 +453,6 @@ export const listings = loginRequiredWrapper(async (cityName=undefined) => {
   POTENTIAL @TODO: Remove ID field on backend and here. Potential security risk.
 */
 export const openListing = loginRequiredWrapper(async () => {
-  console.log("Opening..")
   const response = await instance.put("/open_listing");
 
   if (response && response.status != 200 || !!response.data["err_msg"]) {
@@ -470,7 +470,6 @@ export const openListing = loginRequiredWrapper(async () => {
   POTENTIAL @TODO: Remove ID field on backend and here. Potential security risk.
 */
 export const closeListing = loginRequiredWrapper(async () => {
-  console.log("Closing..")
   const response = await instance.put("/close_listing");
 
   if (response && response.status != 200 || !!response.data["err_msg"]) {
