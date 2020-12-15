@@ -20,7 +20,7 @@ export class LandingCarousel extends React.Component {
             <Carousel.Item interval={3000}>
                 <img
                 className="d-block w-100"
-                src="https://assets.bucketlistly.blog/sites/5adf778b6eabcc00190b75b1/assets/5ae45ccacfbe2e001509250c/one-month-colombia-backpacking-itinerary-image-14.jpg"
+                src="https://www.uncovercolombia.com/site/assets/files/1773/best-time-to-visit-colombia-4.1200x0-is.jpg"
                 alt="Second slide"
                 />
 
