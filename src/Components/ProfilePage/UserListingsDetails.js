@@ -1,14 +1,14 @@
 import React from 'react';
 import { Form, Button, Card } from 'react-bootstrap';
 import '../../Styles/ProfileStyles/UserListingsDetails.css';
-import { updateListing, request, sentRequests, removeRequest, openListing, closeListing } from "../../Utils/requests";
+import { cities, updateListing, request, sentRequests, removeRequest, openListing, closeListing } from "../../Utils/requests";
 
 export class UserListingsDetails extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
             id: '',
-            cityOption:["London", "New York", "Kiev", "Moscow"], // <--------Needs to be fetched in and populated
+            cityOption:["Loading..."], // <--------Needs to be fetched in and populated
             picture:"", 
             description:"", 
             location:"",
@@ -33,6 +33,13 @@ export class UserListingsDetails extends React.Component{
         description: this.props.listing.Description || "",
         citySelection: this.props.listing.City || "",
         isListed: this.props.listing.is_listed || "",
+      });
+
+      cities().then(data => {
+        if (data != false) {
+          console.log("DATA: ", data);
+          this.setState({cityOption: data.Cities.map(city => city.Name)});
+        }
       });
       
       sentRequests().then((list) => {
